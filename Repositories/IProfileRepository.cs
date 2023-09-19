@@ -6,7 +6,7 @@ using rest_husky.Models;
 namespace rest_husky.Repositories;
 public interface IProfileRepository
 {
-    Profile CreateProfile(Profile profile);
+    Profile CreateProfile(Profile newProfile);
 
     string SiginIn(string name, string Password);
 
