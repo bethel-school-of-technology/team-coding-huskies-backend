@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSqlite<ProfileContext>("Data Source=rest_husky.db");
 
-builder.Services.AddSingleton<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 
 var app = builder.Build();
 

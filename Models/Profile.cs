@@ -1,5 +1,3 @@
-//implement a new profile.
-// needs (userName, Password, Admin 1/0)
 using System.ComponentModel.DataAnnotations;
 
 namespace rest_husky.Models
@@ -18,7 +16,7 @@ namespace rest_husky.Models
         public string? Password { get; set; }
 
         public bool IsAdmin { get; set; }
-
+    
         public ICollection<Buzz>? Buzzes { get; set; }
 
         public ICollection<Comment>? Comments { get; set; }

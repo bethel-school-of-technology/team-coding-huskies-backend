@@ -10,6 +10,8 @@ public interface IProfileRepository
 
     string SiginIn(string name, string Password);
 
+    Profile? GetProfileById(int userId);
+
 }
     
 

@@ -20,15 +20,35 @@ public class ProfileController : ControllerBase
         _profileRepository = proRepo;
     }
 
+    [HttpGet]
+    [Route("{profileId}")]
+
+    public ActionResult<Profile> GetProfileById(int profileId)
+    {
+        var profile = _profileRepository.GetProfileById(profileId);
+
+        if(profile is not null)
+        {
+            return profile;
+        }
+        else
+        {
+            return NotFound();
+        }
+    }
+
     [HttpPost]
     [Route("register")]
-    public ActionResult CreateProfile(Profile profile)
+    public IActionResult CreateProfile(Profile newProfile)
     {
-        if (profile == null || !ModelState.IsValid)
+        if (newProfile == null || !ModelState.IsValid)
         {
             return BadRequest();
         }
-        return NoContent();
+        
+        var profile = _profileRepository.CreateProfile(newProfile);
+
+        return CreatedAtAction(nameof(GetProfileById), new { profileId = profile!.ProfileId }, profile);
     }
 
     [HttpGet]
