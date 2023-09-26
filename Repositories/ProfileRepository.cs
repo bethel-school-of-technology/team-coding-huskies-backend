@@ -11,15 +11,15 @@ public class ProfileRepository : IProfileRepository
 
         mockProfiles = new List<Profile>
         {
-            new Profile {profileId = 1, userName = "AndreasD", Password = "password1!"},
-            new Profile {profileId = 2, userName = "RobertB", Password = "password2!"},
-            new Profile {profileId = 3, userName = "JaycobC", Password = "password3!"}
+            new Profile {ProfileId = 1, userName = "AndreasD", Password = "password1!"},
+            new Profile {ProfileId = 2, userName = "RobertB", Password = "password2!"},
+            new Profile {ProfileId = 3, userName = "JaycobC", Password = "password3!"}
         };
     }
     public Profile CreateProfile(Profile newProfile)
     {
-       var MaxId = mockProfiles.Select(p => p.profileId).DefaultIfEmpty().DefaultIfEmpty().Max();
-       newProfile.profileId = MaxId + 1;
+       var MaxId = mockProfiles.Select(p => p.ProfileId).DefaultIfEmpty().DefaultIfEmpty().Max();
+       newProfile.ProfileId = MaxId + 1;
        mockProfiles.Add(newProfile);
        return newProfile;
     }
