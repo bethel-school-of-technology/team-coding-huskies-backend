@@ -12,6 +12,8 @@ public interface IProfileRepository
 
     Profile? GetProfileById(int userId);
 
+    void DeletePrfileById(int profileId);
+
 }
     
 

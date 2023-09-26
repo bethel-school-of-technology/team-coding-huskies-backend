@@ -34,4 +34,15 @@ public class ProfileRepository : IProfileRepository
     {
         throw new NotImplementedException();
     }
+
+    public void DeletePrfileById(int profileId)
+    {
+        var profileToDelete = _context.Profiles.Find(profileId);
+
+        if (profileToDelete is not null)
+        {
+            _context.Profiles.Remove(profileToDelete);
+            _context.SaveChanges();
+        }
+    }
 }

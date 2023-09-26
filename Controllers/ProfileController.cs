@@ -45,7 +45,7 @@ public class ProfileController : ControllerBase
         {
             return BadRequest();
         }
-        
+
         var profile = _profileRepository.CreateProfile(newProfile);
 
         return CreatedAtAction(nameof(GetProfileById), new { profileId = profile!.ProfileId }, profile);
@@ -56,5 +56,23 @@ public class ProfileController : ControllerBase
     public ActionResult<string> SignIn(string name, string password)
     {
         throw new NotImplementedException();
+    }
+
+    [HttpDelete]
+    [Route("{profileId}")]
+
+    public IActionResult DeleteProfile(int profileId)
+    {
+        var profile = _profileRepository.GetProfileById(profileId);
+
+        if(profile is not null)
+        {
+            _profileRepository.DeletePrfileById(profileId);
+            return Ok();
+        }
+        else
+        {
+            return NotFound();
+        }
     }
 }
