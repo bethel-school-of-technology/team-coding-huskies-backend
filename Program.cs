@@ -14,6 +14,7 @@ builder.Services.AddSqlite<ProfileContext>("Data Source=rest_husky.db");
 
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped<IBuzzRepository, BuzzRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
 var app = builder.Build();
 

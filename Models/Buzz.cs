@@ -13,5 +13,5 @@ public class Buzz
     public string? BuzzEmbed { get; set; }
     [Required]
     public string? BuzzDesc { get; set; }
-    public ICollection<Comment>? Commented { get; } = new List<Comment>();
+    public ICollection<Comment> Commented { get; } = new List<Comment>();
 }
