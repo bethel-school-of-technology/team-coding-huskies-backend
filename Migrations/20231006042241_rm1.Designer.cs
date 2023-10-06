@@ -11,8 +11,8 @@ using rest_husky.Data;
 namespace rest_husky.Migrations
 {
     [DbContext(typeof(ProfileContext))]
-    [Migration("20230926041906_ModelRevisions2")]
-    partial class ModelRevisions2
+    [Migration("20231006042241_rm1")]
+    partial class rm1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,15 @@ namespace rest_husky.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("BuzzDesc")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("BuzzEmbed")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("BuzzTitle")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -49,6 +57,9 @@ namespace rest_husky.Migrations
                     b.Property<int?>("BuzzId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("ProfileId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -57,12 +68,14 @@ namespace rest_husky.Migrations
 
                     b.HasIndex("BuzzId");
 
+                    b.HasIndex("ProfileId");
+
                     b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("rest_husky.Models.Profile", b =>
                 {
-                    b.Property<int>("ProfileId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -79,7 +92,7 @@ namespace rest_husky.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ProfileId");
+                    b.HasKey("Id");
 
                     b.ToTable("Profiles");
                 });
@@ -94,18 +107,24 @@ namespace rest_husky.Migrations
             modelBuilder.Entity("rest_husky.Models.Comment", b =>
                 {
                     b.HasOne("rest_husky.Models.Buzz", null)
-                        .WithMany("Comments")
+                        .WithMany("Commented")
                         .HasForeignKey("BuzzId");
+
+                    b.HasOne("rest_husky.Models.Profile", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("ProfileId");
                 });
 
             modelBuilder.Entity("rest_husky.Models.Buzz", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("Commented");
                 });
 
             modelBuilder.Entity("rest_husky.Models.Profile", b =>
                 {
                     b.Navigation("Buzzes");
+
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

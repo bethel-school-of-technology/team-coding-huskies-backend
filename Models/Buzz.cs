@@ -6,9 +6,12 @@ namespace rest_husky.Models;
 public class Buzz 
 {
     [Key]
-    public int BuzzId { get; set; }
+    public int Id { get; set; }
+    [Required]
+    public string? BuzzTitle { get; set; }
     [Required]
     public string? BuzzEmbed { get; set; }
-    [JsonIgnore]
-    public ICollection<Comment>? Commented { get; set; }
+    [Required]
+    public string? BuzzDesc { get; set; }
+    public ICollection<Comment>? Commented { get; } = new List<Comment>();
 }

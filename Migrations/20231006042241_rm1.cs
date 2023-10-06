@@ -5,7 +5,7 @@
 namespace rest_husky.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class rm1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,7 +14,7 @@ namespace rest_husky.Migrations
                 name: "Profiles",
                 columns: table => new
                 {
-                    ProfileId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     userName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
@@ -22,7 +22,7 @@ namespace rest_husky.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Profiles", x => x.ProfileId);
+                    table.PrimaryKey("PK_Profiles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -31,7 +31,9 @@ namespace rest_husky.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    BuzzTitle = table.Column<string>(type: "TEXT", nullable: false),
                     BuzzEmbed = table.Column<string>(type: "TEXT", nullable: false),
+                    BuzzDesc = table.Column<string>(type: "TEXT", nullable: false),
                     ProfileId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -41,7 +43,7 @@ namespace rest_husky.Migrations
                         name: "FK_Buzzes_Profiles_ProfileId",
                         column: x => x.ProfileId,
                         principalTable: "Profiles",
-                        principalColumn: "ProfileId");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -51,22 +53,33 @@ namespace rest_husky.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Text = table.Column<string>(type: "TEXT", nullable: false),
+                    BuzzId = table.Column<int>(type: "INTEGER", nullable: true),
                     ProfileId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Comments_Buzzes_BuzzId",
+                        column: x => x.BuzzId,
+                        principalTable: "Buzzes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Comments_Profiles_ProfileId",
                         column: x => x.ProfileId,
                         principalTable: "Profiles",
-                        principalColumn: "ProfileId");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Buzzes_ProfileId",
                 table: "Buzzes",
                 column: "ProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_BuzzId",
+                table: "Comments",
+                column: "BuzzId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_ProfileId",
@@ -78,10 +91,10 @@ namespace rest_husky.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Buzzes");
+                name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Comments");
+                name: "Buzzes");
 
             migrationBuilder.DropTable(
                 name: "Profiles");

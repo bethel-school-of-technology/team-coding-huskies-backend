@@ -48,7 +48,7 @@ public class ProfileController : ControllerBase
 
         var profile = _profileRepository.CreateProfile(newProfile);
 
-        return CreatedAtAction(nameof(GetProfileById), new { profileId = profile!.ProfileId }, profile);
+        return CreatedAtAction(nameof(GetProfileById), new { profileId = profile!.Id }, profile);
     }
 
     [HttpGet]

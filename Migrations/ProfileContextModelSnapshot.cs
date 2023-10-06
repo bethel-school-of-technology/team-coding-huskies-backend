@@ -19,18 +19,26 @@ namespace rest_husky.Migrations
 
             modelBuilder.Entity("rest_husky.Models.Buzz", b =>
                 {
-                    b.Property<int>("BuzzId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("BuzzDesc")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("BuzzEmbed")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("BuzzTitle")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("ProfileId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("BuzzId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProfileId");
 
@@ -39,7 +47,7 @@ namespace rest_husky.Migrations
 
             modelBuilder.Entity("rest_husky.Models.Comment", b =>
                 {
-                    b.Property<int>("CommentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -53,7 +61,7 @@ namespace rest_husky.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("CommentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("BuzzId");
 
@@ -64,7 +72,7 @@ namespace rest_husky.Migrations
 
             modelBuilder.Entity("rest_husky.Models.Profile", b =>
                 {
-                    b.Property<int>("ProfileId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -81,7 +89,7 @@ namespace rest_husky.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ProfileId");
+                    b.HasKey("Id");
 
                     b.ToTable("Profiles");
                 });

@@ -27,7 +27,7 @@ public class ProfileRepository : IProfileRepository
             .Include(p => p.Buzzes)
             .Include(p => p.Comments)
             .AsNoTracking()
-            .SingleOrDefault(p => p.ProfileId == userId);
+            .SingleOrDefault(p => p.Id == userId);
     }
 
     public string SiginIn(string name, string Password)
