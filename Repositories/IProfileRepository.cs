@@ -6,9 +6,14 @@ using rest_husky.Models;
 namespace rest_husky.Repositories;
 public interface IProfileRepository
 {
-    Profile CreateProfile(Profile profile);
+    IEnumerable<Profile> GetAllProfiles();
+    Profile CreateProfile(Profile newProfile);
 
-    string SiginIn(string name, string Password);
+    string SiginIn(string email, string Password);
+
+    Profile? GetProfileById(int userId);
+
+    void DeletePrfileById(int profileId);
 
 }
     
