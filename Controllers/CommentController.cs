@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using rest_husky.Models;
 using rest_husky.Repositories;
@@ -33,6 +35,7 @@ public class CommentController : ControllerBase
     }
 
     [HttpPost("{postId}/{profileId}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public IActionResult CreateComment(int postId, int profileId, Comment newComment)
     {
         var profile = _commentRepo.GetProfile(profileId);
@@ -49,6 +52,7 @@ public class CommentController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public IActionResult DeleteComment(int id)
     {
         var comment = _commentRepo.GetComment(id);
@@ -65,6 +69,7 @@ public class CommentController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public ActionResult<Buzz> EditComment(Comment comment)
     {
 

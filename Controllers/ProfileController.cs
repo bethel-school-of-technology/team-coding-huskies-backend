@@ -2,6 +2,8 @@
 using rest_husky.Models;
 using rest_husky.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace rest_husky.Controllers;
 
@@ -38,7 +40,6 @@ public class ProfileController : ControllerBase
     }
 
     [HttpPost]
-    [Route("register")]
     public IActionResult CreateProfile(Profile newProfile)
     {
         if (newProfile == null || !ModelState.IsValid)
@@ -53,13 +54,25 @@ public class ProfileController : ControllerBase
 
     [HttpGet]
     [Route("login")]
-    public ActionResult<string> SignIn(string name, string password)
+    public ActionResult<string> SignIn(string email, string password)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        {
+            return BadRequest();
+        }
+
+        var token = _profileRepository.SiginIn(email, password);
+
+        if (string.IsNullOrWhiteSpace(token)) {
+            return Unauthorized();
+        }
+
+        return Ok(token);
     }
 
     [HttpDelete]
     [Route("{profileId}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
     public IActionResult DeleteProfile(int profileId)
     {
@@ -75,4 +88,12 @@ public class ProfileController : ControllerBase
             return NotFound();
         }
     }
+
+    [HttpGet]
+
+    public IEnumerable<Profile> GetAllProfiles()
+    {
+        return _profileRepository.GetAllProfiles();
+    }
+    
 }

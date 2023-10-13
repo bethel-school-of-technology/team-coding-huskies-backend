@@ -1,4 +1,6 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using rest_husky.Models;
 using rest_husky.Repositories;
@@ -39,6 +41,7 @@ public class BuzzController : ControllerBase
         }
    }
     [HttpPost("{profileId}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public IActionResult BuzzCreate(int profileId, Buzz NewBuzz)
     {
         var profile = _buzzRepo.GetProfileById(profileId);
@@ -54,6 +57,7 @@ public class BuzzController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public IActionResult DeleteBuzz(int id)
     {
         var buzz = _buzzRepo.GetBuzzById(id);
@@ -70,6 +74,7 @@ public class BuzzController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public ActionResult<Buzz> UpdateBuzz(Buzz buzz)
     {
 

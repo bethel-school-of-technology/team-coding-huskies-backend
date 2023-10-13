@@ -6,6 +6,9 @@ namespace rest_husky.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
+        [EmailAddress]
+        public string? Email { get; set; }
 
         [Required]
         [MaxLength(50)]
